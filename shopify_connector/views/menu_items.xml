@@ -1,0 +1,259 @@
+<odoo>
+
+    <!-- Dashboard -->
+    <menuitem   
+        id="shopify_dashboard_root"
+        name="Shopify"
+    />
+
+    <menuitem   
+        id="shopify_dashboard"
+        name="Dashboard"
+        parent="shopify_dashboard_root"
+        action="shopify_client_action"
+    />
+
+    <!-- Sales -->
+    <menuitem   
+        id="shopify_sales_root"
+        name="Sales"
+        parent="shopify_dashboard_root"
+    />
+
+    <!-- Sales -> Quotation -->
+    <menuitem   
+        id="shopify_quotation_root"
+        name="Quotations"
+        parent="shopify_sales_root"
+        action="shopify_quotation_action"
+    />
+
+    <!-- Sales -> Risky Quotation -->
+    <menuitem   
+        id="shopify_risky_quotation_root"
+        name="Risky Quotations"
+        parent="shopify_sales_root"
+        action="shopify_risky_quotation_action"
+    />
+
+    <!-- Sales -> Orders-->
+    <menuitem   
+        id="shopify_orders_root"
+        name="Orders"
+        parent="shopify_sales_root"
+        action="shopify_orders_action"
+    />
+
+    <!-- Sales -> Delivery Orders-->
+    <menuitem   
+        id="shopify_delivery_order_root"
+        name="Delivery Orders"
+        parent="shopify_sales_root"
+        action="shopify_delivery_action"
+    />
+
+
+    <!-- Sales -> Invoices-->
+    <menuitem   
+        id="shopify_invoice_root"
+        name="Invoices"
+        parent="shopify_sales_root"
+        action="shopify_invoice_action"
+    />
+
+
+    <!-- Sales -> Refunds-->
+    <menuitem   
+        id="shopify_refunds_root"
+        name="Refunds"
+        parent="shopify_sales_root"
+        action="shopify_refunds_action"
+    />
+
+
+    <!-- Sales -> Customers-->
+    <menuitem   
+        id="shopify_customer_root"
+        name="Customers"
+        parent="shopify_sales_root"
+        action="shopify_customer_action"
+    />
+
+
+    <!-- shopify -> Products -->
+    <menuitem   
+        id="shopify_product_template_ept_parent_root"
+        name="Products"
+        parent="shopify_dashboard_root"
+    />
+
+    <!-- shopify -> Products -> Products-->
+    <menuitem   
+        id="shopify_product_template_ept_submenuitem_root"
+        name="Products"
+        parent="shopify_product_template_ept_parent_root"
+        action="shopify_product_template_ept_action"
+    />
+
+
+    <!-- shopify -> Products -> Product Variant-->
+    <menuitem   
+        id="shopify_product_product_ept_submenuitem_root"
+        name="Product Variants"
+        parent="shopify_product_template_ept_parent_root"
+        action="shopify_product_product_ept_action"
+    />
+
+
+    <!-- shopify -> Operations -->
+    <menuitem   
+        id="operation_menuitem_root"
+        name="Operations"
+        parent="shopify_dashboard_root"
+        action="operation_action"
+    />
+
+
+    <!-- shopify -> logs -->
+    <menuitem   
+        id="shopify_order_data_queue_ept_root_menuitem"
+        name="Logs"
+        parent="shopify_dashboard_root"
+    />
+
+    <!-- shopify -> logs -> Unshipped Orders Queue -->
+    <menuitem   
+        id="shopify_order_data_queue_ept_root_sub_menuitem"
+        name="Unshipped Orders Queue"
+        parent="shopify_order_data_queue_ept_root_menuitem"
+        action="shopify_order_data_queue_ept_action"
+    />
+
+
+    <!-- shopify -> logs -> shipped Orders Queue -->
+    <menuitem   
+        id="shopify_order_data_queue_ept_root_sub_menuitem_shipped"
+        name="Shipped Orders Queue"
+        parent="shopify_order_data_queue_ept_root_menuitem"
+        action="shopify_order_data_queue_ept_action_shipped"
+    />
+
+
+    <!-- shopify -> logs -> product data Queue -->
+    <menuitem   
+        id="shopify_order_data_queue_product_root_sub_menuitem"
+        name="Product Data Queues"
+        parent="shopify_order_data_queue_ept_root_menuitem"
+        action="shopify_order_data_product_queue_ept_action"
+    />
+
+
+    <!-- shopify -> logs -> customer data Queue -->
+    <menuitem   
+        id="shopify_order_data_queue_customer_root_sub_menuitem"
+        name="Customer Data Queues"
+        parent="shopify_order_data_queue_ept_root_menuitem"
+        action="shopify_order_data_customer_queue_ept_action"
+    />
+
+    
+    <!-- shopify -> logs -> Export Stock Queues -->
+    <menuitem   
+        id="shopify_order_data_queue_export_stock_root_sub_menuitem"
+        name="Export Stock Queues"
+        parent="shopify_order_data_queue_ept_root_menuitem"
+        action="shopify_order_data_export_stock_queue_ept_action"
+    />
+
+    <!-- shopify -> logs -> Logs Lines -->
+    <menuitem   
+        id="common_log_lines_ept_data_menuitem"
+        name="Logs Lines"
+        parent="shopify_order_data_queue_ept_root_menuitem"
+        action="common_log_lines_ept_data_action"
+    />
+
+
+    <!-- shopify -> reporting -> sales-->
+    <menuitem   
+        id="sale_report_root_menuitem"
+        name="Reporting"
+        parent="shopify_dashboard_root"
+    />
+
+    <menuitem   
+        id="sale_report_sub_menuitem"
+        name="Sales"
+        parent="sale_report_root_menuitem"
+        action="action_order_product_analysis_inherit"
+    />
+
+
+
+    <!-- shopify -> configuration -> Instances-->
+    <menuitem   
+        id="shopify_instance_ept_menuitem"
+        name="Configuration"
+        parent="shopify_dashboard_root"
+    />
+
+    <menuitem   
+        id="shopify_instance_ept_sub_menuitem"
+        name="Instance"
+        parent="shopify_instance_ept_menuitem"
+        action="shopify_instance_ept_action"
+    />
+
+
+    <!-- shopify -> configuration -> Sale Auto Workflow-->
+    <menuitem   
+        id="sale_workflow_process_ept_sub_menuitem"
+        name="Sale Auto Workflow"
+        parent="shopify_instance_ept_menuitem"
+        action="sale_workflow_process_ept_action"
+    />
+
+
+    <!-- shopify -> configuration -> Payment Getway-->
+    <menuitem id="menu_shopify_payment_gateway_ept" name="Shopify Payment Gateway"
+              action="action_shopify_payment_gateway_ept"
+              parent="shopify_instance_ept_menuitem"/>
+    
+
+
+    <!-- shopify -> configuration -> Financial Status-->
+    <menuitem id="menu_sale_auto_workflow_configuration_ept" 
+        name="Financial Status" 
+        parent="shopify_instance_ept_menuitem"
+        action="action_sale_auto_workflow_configuration_ept"
+    />
+
+    <!-- shopify -> configuration -> Shopify Location-->
+    <menuitem id="shopify_location_ept_menuitem" 
+        name="Shopify Locations" 
+        parent="shopify_instance_ept_menuitem"
+        action="shopify_location_ept_action"
+    />
+
+
+    <menuitem id="setting_menuitem_shopify" 
+        name="Settings" 
+        parent="shopify_instance_ept_menuitem"
+        action="action_res_config_settings"
+        sequence="0"
+        groups="base.group_system"
+    />
+
+
+
+
+    
+
+    
+    
+
+    
+    
+
+
+</odoo>

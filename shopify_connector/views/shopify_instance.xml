@@ -1,0 +1,1419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="shopify_instance_ept_tree_view" model="ir.ui.view">
+        <field name="name">shopify.instance.ept.tree.view</field>
+        <field name="model">shopify.instance.ept</field>
+        <field name="arch" type="xml">
+            <list create="true" sample="1">
+                <field name="name"/>
+                <field name="shopify_host"/>
+                <field name="shopify_warehouse_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_reset_credentials_wizard" model="ir.actions.act_window">
+        <field name="name">Reset Credentials</field>
+        <field name="res_model">reset.credentials</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+    <record id="view_reset_credentials_wizard_form" model="ir.ui.view">
+        <field name="name">reset.credentials.form</field>
+        <field name="model">reset.credentials</field>
+        <field name="arch" type="xml">
+            <form string="Reset Credentials">
+                <group>
+                    <field name="host" />
+                    <field name="api_key" />
+                    <field name="access_token" />
+                    <field name="secret_key" />
+                </group>
+                <footer>
+                    <button name="action_test_connection" string="Test Connection" type="object" class="btn-primary" />
+                    <button string="Save" type="object" name="action_save_credentials" class="btn-secondary" />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_shopify_scheduled_wizard" model="ir.actions.act_window">
+        <field name="name">Shopify Scheduled Wizard</field>
+        <field name="res_model">shopify.scheduled.action</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+        <record id="view_action_shopify_scheduled_wizard_form" model="ir.ui.view">
+            <field name="name">shopify.scheduled.action.form</field>
+            <field name="model">shopify.scheduled.action</field>
+            <field name="arch" type="xml">
+                <form string="Scheduled Actions Configuration">
+                    <group>
+                        <separator string="Order Information"/>
+                        
+                        <group>
+                            <field name="import_order" widget="boolean_toggle" class="o_onboard_boolean_toggle"/>
+                            <div class="o_onboard_cron_settings" invisible="not import_order">
+                                <field name="import_order_interval_type" placeholder="Select Interval Type" required="import_order" class="o_onboard_cron_type"/>
+                                <field name="import_order_number" placeholder="Enter Interval Number" required="import_order" class="o_onboard_cron_box"/>
+                                <field name="import_order_next_execution" placeholder="Select Next Execution Date"  class="o_onboard_cron_execution"/>
+                                <field name="import_order_assigned_user" placeholder="Select Assigned User" required="import_order" class="o_onboard_cron_user"/>
+                            </div>
+                        </group>
+
+                        <group>
+                            <field name="import_shipped_order" widget="boolean_toggle" class="o_onboard_boolean_toggle"/>
+                            <div class="o_onboard_cron_settings" invisible="not import_shipped_order">
+                                <field name="import_shipped_order_interval_type" placeholder="Select Interval Type"/>
+                                <field name="import_shipped_order_number" placeholder="Enter Interval Number"/>
+                                <field name="import_shipped_order_next_execution" placeholder="Select Next Execution Date"/>
+                                <field name="import_shipped_order_assigned_user" placeholder="Select Assigned User"/>
+                            </div>
+                        </group>
+
+                        <group>
+                            <field name="update_order_status" widget="boolean_toggle" class="o_onboard_boolean_toggle"/>
+                            <div class="o_onboard_cron_settings" invisible="not update_order_status">
+                                <field name="update_order_status_interval_type" placeholder="Select Interval Type"/>
+                                <field name="update_order_status_number" placeholder="Enter Interval Number"/>
+                                <field name="update_order_status_next_execution" placeholder="Select Next Execution Date"/>
+                                <field name="update_order_status_assigned_user" placeholder="Select Assigned User"/>
+                            </div>
+                        </group>
+
+                        <group>
+                            <field name="import_cancel_order" widget="boolean_toggle" class="o_onboard_boolean_toggle"/>
+                            <div class="o_onboard_cron_settings" invisible="not import_cancel_order">
+                                <field name="import_cancel_order_interval_type" placeholder="Select Interval Type"/>
+                                <field name="import_cancel_order_number" placeholder="Enter Interval Number"/>
+                                <field name="import_cancel_order_next_execution" placeholder="Select Next Execution Date"/>
+                                <field name="import_cancel_order_assigned_user" placeholder="Select Assigned User"/>
+                            </div>
+                        </group>
+                    </group>
+
+                    <group>
+                        <separator string="Stock Information"/>
+                        <group>
+                            <field name="export_stock" widget="boolean_toggle" class="o_onboard_boolean_toggle"/>
+                            <div class="o_onboard_cron_settings" invisible="not export_stock">
+                                <field name="export_stock_interval_type" placeholder="Select Interval Type"/>
+                                <field name="export_stock_number" placeholder="Enter Interval Number"/>
+                                <field name="export_stock_next_execution" placeholder="Select Next Execution Date"/>
+                                <field name="export_stock_assigned_user" placeholder="Select Assigned User"/>
+                            </div>
+                        </group>
+                    </group>
+
+                    <group>
+                        <separator string="Product Information"/>
+                        <group>
+                            <field name="import_product" widget="boolean_toggle" class="o_onboard_boolean_toggle"/>
+                            <div class="o_onboard_cron_settings" invisible="not import_product">
+                                <field name="import_product_interval_type" placeholder="Select Interval Type"/>
+                                <field name="import_product_number" placeholder="Enter Interval Number"/>
+                                <field name="import_product_next_execution" placeholder="Select Next Execution Date"/>
+                                <field name="import_product_assigned_user" placeholder="Select Assigned User"/>
+                            </div>
+                        </group>
+                    </group>
+
+                    <footer>
+                        <button string="Save" type="object" name="action_save_credentials" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+
+
+
+    <record id="shopify_instance_ept_form" model="ir.ui.view">
+        <field name="name">shopify.instance.ept.form.view</field>
+        <field name="model">shopify.instance.ept</field>
+        <field name="arch" type="xml">
+            <form string="Shopify" name="shopify_connector" data-string="shopify_connector" create="false" duplicate="1">
+                <header>
+                    <button name="shopify_test_connection" string="Check Connection" class="oe_highlight" type="object"/>
+                </header>
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" style="width:16% !important" name="open_reset_credentials_wizard" class="oe_stat_button" groups="base.group_system" icon="fa-undo" invisible="not active">
+                            <span class="o_stat_text">Reset Credentials</span>
+                        </button>
+                        <button type="object" style="width:16% !important" name="cron_configuration_action" class="oe_stat_button" groups="base.group_system" icon="fa-wrench" invisible="not active">
+                            <span class="o_stat_text">Configure Schedulers</span>
+                        </button>
+                        <button type="object" name="action_redirect_to_ir_cron" class="oe_stat_button" icon="fa-play-circle" groups="base.group_system" invisible="not active">
+                            <span class="o_stat_text">Active Schedulers</span>
+                        </button>
+                        <button class="oe_stat_button" name="action_shopify_active_archive_instance" icon="fa-lock" type="object" invisible="not active">
+                            <span class="o_stat_text" style="color:#2dab2d">Active</span>
+                        </button>
+                        <button class="oe_stat_button" name="action_shopify_active_archive_instance" icon="fa-unlock" type="object" invisible="active">
+                            <span class="o_stat_text" style="color:#da3434">Archive</span>
+                        </button>
+                    </div>
+                    <div class="ribbon ribbon-top-right" invisible="active">
+                        <span class="bg-danger" style="left: -4px !important;top: 20px !important">Archived
+                        </span>
+                    </div>
+                    <div>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group string="ERP Configuration">
+                        <group>
+                            <field name="shopify_company_id" widget="selection"  groups="base.group_multi_company"/>
+                            <field name="shopify_warehouse_id" required="1" />
+                        </group>
+                        <group>
+                            <field name="shopify_lang_id" required="1" />
+                        </group>
+                    </group>
+                    <group string="Shopify Site Info">
+                        <group>
+                            <field name="shopify_host" />
+                            <field name="shopify_store_time_zone" />
+                        </group>
+                        <group>
+                            <field name="shopify_api_key" />
+                            <field name="shopify_password" password="1" string="Access Token" />
+                            <field name="shopify_shared_secret" />
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Last Operation Details" name="last_operation_detail">
+                            <group>
+                                <group>
+                                    <field name="shopify_last_date_product_import"/>
+                                    <field name="last_date_order_import"/>
+                                    <field name="payout_last_import_date"/>
+                                    <field name="last_buy_with_prime_order_import_date"/>
+                                </group>
+                                <group>
+                                    <field name="shopify_last_date_customer_import"/>
+                                    <field name="last_shipped_order_import_date"/>
+                                    <field name="shopify_last_date_update_stock"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="webhook" string="Webhooks">
+                            <div class="alert alert-warning" role="alert">
+                                <div style="padding:5px;">
+                                    <h5 style="color:#7d5a29;">
+                                        <b>
+                                            <u>Note:</u>
+                                        </b>
+                                    </h5>
+                                    <b>
+                                        <ol>
+                                            <li>
+                                                Shopify has implemented a five second timeout
+                                                period and
+                                                a retry
+                                                period for subscriptions. Shopify waits five
+                                                seconds
+                                                for a response
+                                                to each request to a webhook. If there is no
+                                                response, or an error
+                                                is returned, then Shopify retries the
+                                                connection
+                                                19 times over the
+                                                next 48 hours. If there are 19
+                                                consecutive
+                                                failures, then the
+                                                webhook subscription is
+                                                deleted. A warning that
+                                                the subscription
+                                                will be deleted is
+                                                sent to the app's emergency
+                                                developer email
+                                                address.
+                                            </li>
+                                            <li>
+                                                If you observe any such discrepancy, please use
+                                                refresh
+                                                button shown below, to get the updated status of
+                                                the
+                                                webhooks.
+                                            </li>
+                                            <li>
+                                                If an instance is deactivated, the related
+                                                webhooks will
+                                                be 'Inactive' automatically.
+                                            </li>
+                                            <li>
+                                                If an instance is reactivated, the related
+                                                webhooks will
+                                                not be activated automatically and needs to be
+                                                activated
+                                                manually.
+                                            </li>
+                                            <li>
+                                                The Webhooks created using the API do not show
+                                                up in the
+                                                Shopify
+                                                admin.
+                                            </li>
+                                            <li>
+                                                Only instances having SSL connection (https://)
+                                                are
+                                                permitted.
+                                            </li>
+                                        </ol>
+                                    </b>
+                                </div>
+                            </div>
+                            <button string="Refresh" name="refresh_webhooks" type="object" class="oe_right btn-outline-primary"/>
+
+                            
+                            <field name="webhook_ids" nolabel="1" >
+                                <list decoration-success="state=='active'">
+                                    <field name="webhook_name" required="1"/>
+                                    <field name="webhook_action" required="1"/>
+                                    <field name="state" required="1"/>
+                                </list>
+                            </field> 
+                           
+                        </page>
+                        <page string="Payout Configurations" name="payout_configurations">
+                            <div class="alert alert-warning" role="alert">
+                                <div style="padding:5px;">
+                                    <h5 style="color:#7d5a29;">
+                                        <b>
+                                            <u>Note:</u>
+                                        </b>
+                                    </h5>
+                                    <b>
+                                        <ol>
+                                            <li>
+                                                The user does not need to configure charges or
+                                                refunds. Both types of transactions will be
+                                                reconciled with the invoice and the refund,
+                                                respectively.
+                                            </li>
+                                        </ol>
+                                    </b>
+                                </div>
+                            </div>
+                            <div name="payout_transaction">
+                                <field name="transaction_line_ids" colspan="4" nolabel="1">
+                                    <list nolabel="1" editable="bottom">
+                                        <field name="transaction_type" required="1"/>
+                                        <field name="account_id" required="1" options="{'no_create':True,'no_create_edit': True}"/>
+                                    </list>
+                                </field>
+                            </div>
+                        </page>
+                        <page string="Default products" name="default_order_product">
+                            <group name="group_default_order_product">
+                                <group name="default_product">
+                                    <field name="discount_product_id" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                                    <field name="shipping_product_id" string="Shipping" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                                    <field name="gift_card_product_id" string="Gift Card" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                                    <field name="tip_product_id" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                                    <field name="duties_product_id" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                                </group>
+                                <group>
+                                    <field name="custom_service_product_id" string="Custom Service Item" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                                    <field name="custom_storable_product_id" string="Custom Storable Item" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                                    <field name="refund_adjustment_product_id" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="shopify_instance_ept_action" model="ir.actions.act_window">
+        <field name="name">Shopify Instance</field>
+        <field name="res_model">shopify.instance.ept</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    
+
+
+    <record id="sale_workflow_process_ept_tree" model="ir.ui.view">
+        <field name="name">sale.workflow.process.ept.tree.view</field>
+        <field name="model">sale.workflow.process.ept</field>
+        <field name="arch" type="xml">
+            <list string="sale_workflow_process">
+                <field name="name"/>
+                <field name="validate_order"/>
+                <field name="create_invoice"/>
+                <field name="register_payment"/>
+                <field name="invoice_date_is_order_date"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="sale_workflow_process_ept_form" model="ir.ui.view">
+        <field name="name">sale.workflow.process.ept.view.form</field>
+        <field name="model">sale.workflow.process.ept</field>
+        <field name="arch" type="xml">
+            <form string="sale_workflow_process">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                        <group>
+                            <field name="journal_id" invisible="not register_payment" required="register_payment" domain="[('type','in',['bank','cash'])]"/>
+                            <field name="inbound_payment_method_id" invisible="not register_payment" required="register_payment" domain=""/>
+                            <field name="sale_journal_id" required="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Workflow Option">
+                            <field name="validate_order"/>
+                            <field name="create_invoice" invisible="not validate_order"/>
+                            <field name="register_payment" invisible="not create_invoice"/>
+                            <field name="invoice_date_is_order_date"/>
+                        </group>
+                        <group string="Order Configuration">
+                            <field name="picking_policy" required="1"/>
+                        </group>
+                        <p colspan="2" class="alert alert-warning" role="alert" invisible="not register_payment">
+                            <div style="color:#ff0000; font-size:15px;">
+                                <b>Payment Registration :</b>
+                            </div>
+                            <div class="d-inline-block w-100">
+                                <div class="row">
+                                    <div class="col-11 p-0">
+                                        <ul>
+                                            <li>
+                                                <b>Enterprise Edition :</b>
+                                                If 'Accounting'
+                                                module is installed, the invoice will be in "in
+                                                payment" state and
+                                                to register the payment one must use the Bank
+                                                Statement
+                                                Reconciliation process.
+                                            </li>
+                                            <li>
+                                                In all other cases it will be registered by default
+                                                process.
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </p>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="sale_workflow_process_ept_action" model="ir.actions.act_window">
+        <field name="name">Auto Workflow</field>
+        <field name="res_model">sale.workflow.process.ept</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+  
+    <record id="shopify_payment_gateway_ept_tree" model="ir.ui.view">
+        <field name="name">shopify.payment.gateway.ept.tree</field>
+        <field name="model">shopify.payment.gateway.ept</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+                <field name="shopify_instance_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="shopify_payment_gateway_ept_form" model="ir.ui.view">
+        <field name="name">shopify.payment.gateway.ept.form</field>
+        <field name="model">shopify.payment.gateway.ept</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Payment Gateway">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                        <field name="shopify_instance_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action to open the model -->
+    <record id="action_shopify_payment_gateway_ept" model="ir.actions.act_window">
+        <field name="name">Shopify Payment Gateway</field>
+        <field name="res_model">shopify.payment.gateway.ept</field>
+        <field name="view_mode">list,form</field>
+        <!-- <field name="view_id" ref="shopify_payment_gateway_ept_tree"/> -->
+    </record>
+
+   
+
+    <!-- Tree View -->
+    <record id="sale_auto_workflow_configuration_ept_tree" model="ir.ui.view">
+        <field name="name">sale.auto.workflow.configuration.ept.tree</field>
+        <field name="model">sale.auto.workflow.configuration.ept</field>
+        <field name="arch" type="xml">
+            <list editable="top" sample="1">
+                <field name="shopify_instance_id" required="1" options="{'no_create':True}" domain="[('active','=',True)]"/>
+                <field name="payment_gateway_id" options="{'no_create':True}" required="1"/>
+                <field name="payment_term_id" required="1"/>
+                <field name="auto_workflow_id" required="1"/>
+                <field name="financial_status" required="1"/>
+                <field name="shopify_order_payment_status" required="1"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!-- Action to open the model -->
+    <record id="action_sale_auto_workflow_configuration_ept" model="ir.actions.act_window">
+        <field name="name">Financial Status</field>
+        <field name="res_model">sale.auto.workflow.configuration.ept</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <record id="res_config_settings_inherit" model="ir.ui.view">
+        <field name="name">res.config.settings.inherit.view.shopify</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="95" />
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="shopify" string="Shopify" name="shopify">
+                    
+                    <div name="description_config">
+                        <h2 style="font-size:25px;">
+                            Odoo Product Configuration
+                        </h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-12 o_setting_box o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="shopify_set_sales_description_in_product"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="shopify_set_sales_description_in_product" string="Use Sales Description of Odoo Product"/>
+                                    <div class="text-muted">
+                                        If checked, it will be attached with Shopify Store's Product's description.
+                                        <br/>
+                                        - This configuration applies to all Shopify instances, not to particular one.
+                                        <br/>
+                                        - The Description value is being received from Shopify is in HTML format, while
+                                        it gets stored in Odoo product's field as Text format. Enable this, only if
+                                        works for you.
+                                        <br/>
+                                        - The Odoo product's Sales Description will be used in Sale order line.
+                                        Generally, the description received from Shopify Store is lengthier. So enable
+                                        this, only if works for you.
+                                        <br/>
+                                        - When a new product from Shopify will be created in Odoo, it will set the
+                                        Description into Odoo product's Sales Description field.
+                                        <br/>
+                                        - When an Odoo product is exported to Shopify Layer, the Sales Description will
+                                        be added into Shopify product's Description field.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 o_setting_box" id="show_shopify_net_profit_report">
+                                <div class="o_setting_left_pane">
+                                    <field name="show_net_profit_report" widget="upgrade_boolean" string="Shopify Net Profit Report"/>
+                                </div>
+                                <div class="o_setting_right_pane" name="show_net_profit_report_right_pane">
+                                    <label for="show_net_profit_report" string="Net Profit Report"/>
+                                    <div class="text-muted">
+                                        - If you enable this configuration, it will add net profit report for all
+                                        instances
+                                        <br/>
+                                        - If you disable this configuration, it will remove net profit report
+                                        automatically
+                                        <br/>
+                                        - You can find Shopify net profit report from Shopify &gt; Reporting &gt; Net profit
+                                        <br/>
+                                        - The Shopify net profit report calculate based on instance level sets,
+                                        analytics accounts
+                                        <br/>
+                                    </div>
+                                    <button name="download_shopify_net_profit_report_module" type="object" string="Download Shopify Net Profit Report Module" class="oe_link" invisible="not show_net_profit_report" help="Install this module if you are See Net profit report for all Instances."/>
+                                </div>
+                            </div>
+                            <div class="col-12 o_setting_box o_setting_box o_setting_box_woo_config">
+                                <div class="o_setting_left_pane ml-2">
+                                    <field name="use_default_terms_and_condition_of_odoo"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="use_default_terms_and_condition_of_odoo"/>
+                                    <div class="text-muted">
+                                        - If checked, it will use Odoo's default T&amp;C under Sales Order notes.
+                                        <br/>
+                                        - If unchecked, it will import Sales Order note from Shopify order response.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <h2 style="font-size:25px;">Instances</h2>
+
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_instance_id" string="Select Instance"/>
+                                <field name="shopify_instance_id" required="shopify_instance_id" options="{'no_create': True, 'no_create_edit' : True}"/>
+                                <!-- <button name="513" icon="fa-arrow-right" type="action" string="Create More Instance" class="oe_link"/> -->
+                            </div>
+                        </div>
+                    </div>
+                    <h2 style="font-size:25px;" invisible="not shopify_instance_id">
+                        General Configuration
+                    </h2>
+                    <div class="row mt16 o_settings_container" invisible="not shopify_instance_id">
+                        <field name="shopify_company_id" invisible="1"/><!-- Reason for making this field invisible beacuse this field is used in other view field as reference or condition.-->
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_warehouse_id" string="Warehouse"/>
+                                <div class="text-muted">
+                                    Selected Warehouse will be set in your Shopify orders.
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_warehouse_id" class="o_light_label" widget="selection" required="shopify_instance_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_lang_id" string="Instance Language"/>
+                                <div class="text-muted">
+                                    Select language based on your Shopify instance
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_lang_id" class="oe_inline" options="{'no_open':True,'no_create':True,'no_create_edit':True}" required="shopify_instance_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div name="shopify_webhook_header" invisible="not shopify_instance_id">
+                        <h2 style="font-size:25px;">Webhook Configuration</h2>
+                    </div>
+                    <div class="row mt16 o_settings_container" invisible="not shopify_instance_id">
+                        <div class="col-12 col-lg-12 o_setting_box">
+                            <div class="alert alert-warning" role="alert">
+
+                                <b>
+                                    <h3 style="font-weight:bold;color:#7d5a29;padding: 0 !important;">
+                                        <u>Note :</u>
+                                    </h3>
+                                    <ul>
+                                        <li>Webhooks can be managed using below options.</li>
+                                        <li>
+                                            Enabling an option will either creates a new webhook for
+                                            its all actions
+                                            (such as 'create', 'update', 'delete' etc.) or activates
+                                            it, if already
+                                            exists.
+                                        </li>
+                                        <li>Disabling an option will deactivates the webhooks.</li>
+                                        <li>
+                                            Only instances having SSL connection (https://) are
+                                            permitted.
+                                        </li>
+                                        <li>For detailed options,</li>
+                                        <ol>
+                                            <li>Go to Shopify &gt;&gt; Configuration &gt;&gt; Instances.</li>
+                                            <li>Open an instance.</li>
+                                            <li>Select Webhooks tab.</li>
+                                        </ol>
+                                    </ul>
+                                </b>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="create_shopify_products_webhook" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="create_shopify_products_webhook" string="Would you like to manage products via webhook from Shopify to Odoo?"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="create_shopify_customers_webhook" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="create_shopify_customers_webhook" string="Would you like to manage Customer via webhook from Shopify to Odoo?"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="create_shopify_orders_webhook" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="create_shopify_orders_webhook" string="Would you like to manage Orders via webhook from Shopify to Odoo?"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div name="shopify_webhook_header" invisible="not shopify_instance_id or not create_shopify_orders_webhook">
+                        <h2 style="font-size:25px;">Order Webhook
+                            Configuration
+                        </h2>
+                    </div>
+                    <div class="row mt16 o_settings_container" invisible="not shopify_instance_id or not create_shopify_orders_webhook">
+                        <div class="col-12 col-lg-6 o_setting_box" invisible="not create_shopify_orders_webhook">
+                            <div class="o_setting_left_pane">
+                                <field name="ship_order_webhook" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ship_order_webhook" string="Would you like to enable Auto-Ship for orders from Shopify to Odoo?"/>
+                                <div class="text-muted">
+                                    If this feature is enabled, the system will automatically validate delivery orders
+                                    when orders are shipped in Shopify.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" invisible="not ship_order_webhook or not create_shopify_orders_webhook">
+                            <div class="o_setting_left_pane">
+                                <field name="forcefully_reserve_stock_webhook" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="forcefully_reserve_stock_webhook" string="Would you like to enable Forceful Transfer Validation from Shopify to Odoo?"/>
+                                <div class="text-muted">
+                                    If this feature is enabled, the system will automatically validate delivery orders
+                                    in case inventory is not available in Odoo.
+                                    This feature is not applicable to the product traceability of Lots and Serial
+                                    numbers
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" invisible="not create_shopify_orders_webhook">
+                            <div class="o_setting_left_pane">
+                                <field name="refund_order_webhook" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="refund_order_webhook" string="Would you like to enable Auto-Refund from Shopify to Odoo?"/>
+                                <div class="text-muted">
+                                    If this feature is enabled, the system will automatically generate a credit note in
+                                    Odoo when a user creates a refund directly in Shopify.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" invisible="not refund_order_webhook">
+                            <div class="o_setting_left_pane">
+                                <field name="return_picking_order" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="return_picking_order" string="Would you like to enable Return from Shopify to Odoo?"/>
+                                <div class="text-muted">
+                                    If this feature is enabled, the system will automatically generate a Return in
+                                    Odoo when a user creates a refund directly in Shopify.
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Credit Note Register Payment configuration -->
+                        <div class="col-12 col-lg-6 o_setting_box" invisible="not refund_order_webhook">
+                            <div class="o_setting_left_pane">
+                                <field name="credit_note_register_payment" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="credit_note_register_payment" string="Would you like to register payment for credit note?"/>
+                                <div class="text-muted">
+                                    If this feature is enabled, the system will automatically register payment for
+                                    credit note.
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Credit Note Register Payment configuration -->
+                        <!-- Payment Journal configuration -->
+                        <div class="col-xs-12 col-md-6 o_setting_box" invisible="not credit_note_register_payment">
+                            <div class="o_setting_right_pane">
+                                <label for="credit_note_payment_journal" string="Payment Journal for Credit note"/>
+                                <div class="text-muted">
+                                    Selected Journal will be set in Credit note Payment journal.
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="credit_note_payment_journal" class="o_light_label" widget="selection" domain="[('type','in',['cash','bank']),('company_id','=',shopify_company_id)]" options="{'no_create':True,'no_open':True}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Payment Journal configuration -->
+                        <div class="col-12 col-lg-6 o_setting_box" invisible="not return_picking_order">
+                            <div class="o_setting_left_pane">
+                                <field name="stock_validate_for_return" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="stock_validate_for_return" string="Would you like to validate return?"/>
+                                <div class="text-muted">
+                                    If this feature is enabled, the system will automatically validate a Return.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6 o_setting_box" invisible="not create_shopify_orders_webhook">
+                            <div class="o_setting_left_pane">
+                                <field name="customer_order_webhook" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="customer_order_webhook" string="Would you like to update customers from Shopify to Odoo?"/>
+                                <div class="text-muted">
+                                    If this feature is enabled, the system will automatically update the customer
+                                    information in existing orders.
+                                    This feature is not applicable if the order has been shipped or the invoice has been
+                                    validated
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" invisible="not create_shopify_orders_webhook">
+                            <div class="o_setting_left_pane">
+                                <field name="update_qty_order_webhook" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="update_qty_order_webhook" string="Would you like to update quantities from Shopify to Odoo?"/>
+                                <div class="text-muted">
+                                    If this feature is enabled, the system will automatically add/remove quantities in
+                                    imported orders when the user manually updates quantities from the Shopify backend.
+                                    This feature is not applicable if the order has been shipped in Odoo
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" invisible="not update_qty_order_webhook">
+                            <div class="o_setting_left_pane">
+                                <field name="update_qty_to_invoice_order_webhook" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="update_qty_to_invoice_order_webhook" string="Would you like to update quantities to invoice?"/>
+                                <div class="text-muted">
+                                    If this feature is enabled, the system will automatically create invoice/credit note
+                                    base on changed quantity from shopify.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" invisible="not create_shopify_orders_webhook">
+                            <div class="o_setting_left_pane">
+                                <field name="add_new_product_order_webhook" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="add_new_product_order_webhook" string="Would you like add new products from Shopify to Odoo?"/>
+                                <div class="text-muted">
+                                    If this feature is enabled, the system will automatically add new products to
+                                    imported sales orders when the user manually adds products from the Shopify store.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <h2 style="font-size:25px;" invisible="not shopify_instance_id">
+                        Product Configuration
+                    </h2>
+                    <div class="row mt16 o_settings_container" invisible="not shopify_instance_id">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="auto_import_product" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="auto_import_product"/>
+                                <div class="text-muted">
+                                    - This option creates a new product in your catalogue if system
+                                    couldn't find
+                                    the product based on SKU / Internal Reference / Default Product
+                                    Code.
+                                    <br/>
+                                    - If you are selling on multiple sales channels and having
+                                    different SKU /
+                                    Internal Reference / Default Product Code on each sales channel,
+                                    it may lead to
+                                    creation of duplicate products in your product catalogue in your
+                                    database.
+                                    <br/>
+                                    - So we request you to enable this option, as per your product
+                                    catalogue
+                                    configuration.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="shopify_sync_product_with_images" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_sync_product_with_images"/>
+                                <div class="text-muted">
+                                    If checked, it will automatically set product image while
+                                    product import
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_sync_product_with"/>
+                                <div class="text-muted">
+                                    While sync products from Shopify to Odoo at the moment it will
+                                    sync Odoo and
+                                    Shopify products base on the selection.
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_sync_product_with" class="o_light_label" widget="selection" required="shopify_instance_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_pricelist_id" string="Pricelist"/>
+                                <div class="text-muted">
+                                    1.During product sync operation, prices will be
+                                    Imported/Exported using this
+                                    Pricelist.
+                                    <br/>
+                                    2.During order sync operation, this pricelist will be set in the
+                                    order if the
+                                    order currency from store and the currency from the pricelist
+                                    set here, matches.
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_pricelist_id" class="o_light_label" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_product_uom_id" string="Unit of Measure"/>
+                                <div class="text-muted">
+                                    Select Unit of Measure for convert shopify weight
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_product_uom_id" class="oe_inline" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_compare_pricelist_id" string="Compare At Pricelist"/>
+                                <div class="text-muted">
+                                    During product sync, Import and Export operation, prices will be Imported/Exported
+                                    using this Pricelist.
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_compare_pricelist_id" class="o_light_label"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="auto_create_product_category" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="auto_create_product_category"/>
+                                <div class="text-muted">
+                                    - If checked, it will automatically create product category while product import
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box" invisible="auto_create_product_category">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_instance_product_category" string="Default product category"/>
+                                <div class="text-muted">
+                                    During product sync, Import and Export operation, If product category set here will
+                                    be set in shopify product layer.
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_instance_product_category" class="o_light_label"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 style="font-size:25px;" invisible="not shopify_instance_id">
+                        Order Configuration
+                    </h2>
+                    <div class="row mt16 o_settings_container" invisible="not shopify_instance_id">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_order_status_ids" string="Import Order Status"/>
+                                <div class="text-muted">
+                                    Select order status which you want to import orders from Shopify store to odoo.
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_order_status_ids" widget="many2many_tags" required="shopify_instance_id" options="{'no_create':True,'no_create_edit': True}" class="oe_inline" domain="[('status', '!=', 'fulfilled')]"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box" style="display:none;">
+                            <div class="o_setting_left_pane">
+                                <field name="auto_fulfill_gift_card_order" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="auto_fulfill_gift_card_order"/>
+                                <div class="text-muted">
+                                    Set this configuration as per Shopify store configuration.
+                                    <br/>
+                                    Here is Shopify store configuration(Settings &gt; Checkout &gt; Order processing).
+                                    <br/>
+                                    If unchecked, It will fulfill qty from Odoo to Shopify in update order status
+                                    process.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_section_id" string="Sales Team"/>
+                                <div class="text-muted">
+                                    Set the sales team for shopify orders
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_section_id" class="o_light_label"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_default_pos_customer_id"/>
+                                <div class="text-muted">
+                                    This Customer will be set in POS order not having any customer.
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_default_pos_customer_id" class="o_light_label" options="{'no_create':True,'no_create_edit': True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt16 o_settings_container" groups="analytic.group_analytic_accounting" invisible="not shopify_instance_id" style="padding: 0px 1px 10px 0px;">
+                            <div class="col-xs-12 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="shopify_is_use_analytic_account" style="margin-left: -0.5em"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="shopify_is_use_analytic_account" string="Enable Analytic Accounting?"/>
+                                    <div class="text-muted">
+                                        Enable this configuration, if you want to use Analytic Account.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-md-6 o_setting_box" groups="analytic.group_analytic_accounting" invisible="not shopify_is_use_analytic_account">
+                                <div class="o_setting_right_pane">
+                                    <label for="shopify_analytic_account_id" string="Analytic Account"/>
+                                    <div class="text-muted">
+                                        Set the Analytic account for shopify orders.
+                                        <li>
+                                            Note : The configuration of the analytic account for this instance will be
+                                            applied to all sales orders created by the connector. With this
+                                            configuration,
+                                            the Analytic Default Rule configured in Odoo will not apply to Shopify
+                                            orders
+                                            invoices. If you wish to use Odoo Analytic Default Rule, you will not have
+                                            to
+                                            configure any analytic account here.
+                                        </li>
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="shopify_analytic_account_id" class="o_light_label" options="{'no_create':True,'no_create_edit': True}" required="shopify_is_use_analytic_account"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="shopify_is_use_default_sequence" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_is_use_default_sequence" string="Use Odoo Default Sequence?"/>
+                                <div class="text-muted">
+                                    If checked,Then use default sequence of odoo for sale order
+                                    create.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box" invisible="shopify_is_use_default_sequence">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_order_prefix"/>
+                                <div class="text-muted">
+                                    Enter Order Prefix
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_order_prefix" class="o_light_label"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_import_order_after_date" string="Import Order After Date"/>
+                                <div class="text-muted">
+                                    System will import only those orders which are created
+                                    after this configured date.
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_import_order_after_date" required="shopify_instance_id"/>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="order_visible_currency" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="order_visible_currency"/>
+                                <div class="text-muted">
+                                    If checked, It will import orders based on the customer's visible currency through
+                                    which the customer has paid the payment for orders.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="is_delivery_fee" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="is_delivery_fee" string="Are you selling for Colorado State(US)?"/>
+                                <div class="text-muted">
+                                    If checked, the connector will add a delivery fee line to the order.
+                                    <ul>
+                                        <li>The connector support the Colorado special tax rule during import orders.
+                                        </li>
+                                    </ul>
+                                    For more details,
+                                    <a href="https://help.shopify.com/en/manual/taxes/us/us-tax-reference#colorado" target="_blank">
+                                        click here
+                                    </a>
+                                </div>
+                                <br/>
+                                <div invisible="not is_delivery_fee">
+                                    <label for="delivery_fee_name"/>
+                                    <div class="text-muted">
+                                        The name you enter here must match the label on the Shopify order that shows the
+                                        Colorado delivery fees applied.
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="delivery_fee_name" required="is_delivery_fee" class="o_light_label"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="is_delivery_multi_warehouse" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="is_delivery_multi_warehouse" string="Is Delivery from Multiple warehouse?"/>
+                                <div class="text-muted">
+                                    If checked, It will update order status based on multiple warehouse in Shopify
+                                    store.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="import_customer_as_company" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="import_customer_as_company" string="Import Customer as Company?"/>
+                                <div class="text-muted">
+                                    If checked, it will create an individual Company type partner from the Company
+                                    name and customer will be created as a child partner of Company.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="import_buy_with_prime_shopify_order" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="import_buy_with_prime_shopify_order" string="Buy with Prime"/>
+                                <div class="text-muted">
+                                    If checked, it will import Buy with Prime Orders.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 o_setting_box" invisible="not import_buy_with_prime_shopify_order">
+                            <div class="o_setting_right_pane">
+                                <label for="buy_with_prime_warehouse_id" string="Warehouse"/>
+                                <div class="text-muted">
+                                    Selected Warehouse will be set in your Shopify buy with prime orders.
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="buy_with_prime_warehouse_id" class="o_light_label" widget="selection" required="import_buy_with_prime_shopify_order"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 o_setting_box" invisible="not import_buy_with_prime_shopify_order">
+                            <div class="o_setting_right_pane">
+                                <label for="buy_with_prime_tag_ids"/>
+                                <div class="text-muted">
+                                    Select Tags for import buy with prime orders
+                                    <div>
+                                        <field name="buy_with_prime_tag_ids" widget="many2many_tags" class="oe_inline" required="import_buy_with_prime_shopify_order"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 o_setting_box" invisible="not import_buy_with_prime_shopify_order">
+                            <div class="o_setting_left_pane">
+                                <field name="Force_transfer_move_of_buy_with_prime_orders" style="margin-left: -0.5em"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="Force_transfer_move_of_buy_with_prime_orders" string="Force Transfer"/>
+                                <div class="text-muted">
+                                    If checked, it will forcefully done the stock move while stock also not there.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 style="font-size:25px;" invisible="not shopify_instance_id">Tax
+                        Configuration
+                    </h2>
+                    <div class="row mt16 o_settings_container" invisible="not shopify_instance_id">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_apply_tax_in_order" string="Apply Tax"/>
+                                <div class="text-muted">
+                                    1) Odoo Default Tax Behaviour - The Taxes will be set based on
+                                    Odoo's default
+                                    functional behaviour i.e. based on Odoo's Tax and Fiscal
+                                    Position
+                                    configurations.
+                                    <br/>
+                                    2) Create New Tax If Not Found - System will search the tax data
+                                    received from
+                                    Shopify in Odoo, will create a new one if it fails in finding
+                                    it.
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_apply_tax_in_order" class="o_light_label"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6 o_setting_box" invisible="shopify_apply_tax_in_order == 'odoo_tax'">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_credit_tax_account_id" string="Credit Note Tax Account"/>
+                                <div class="text-muted">
+                                    Set the credit tax account base on this account we will set this
+                                    account in the
+                                    newly created tax when import orders from Shopify to Odoo.
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_credit_tax_account_id" required="shopify_apply_tax_in_order == 'create_shopify_tax' and shopify_instance_id" class="o_light_label"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box" invisible="shopify_apply_tax_in_order == 'odoo_tax'">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_invoice_tax_account_id" string="Invoice Tax Account"/>
+                                <div class="text-muted">
+                                    Set the invoice tax account base on this account we will set
+                                    this account in the newly created tax when import orders
+                                    from Shopify to Odoo.
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_invoice_tax_account_id" required="shopify_apply_tax_in_order == 'create_shopify_tax' and shopify_instance_id" class="o_light_label"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 style="font-size:25px;" invisible="not shopify_instance_id">Notify By
+                        Email
+                    </h2>
+                    <div class="row mt16 o_settings_container" invisible="not shopify_instance_id">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="shopify_notify_customer" style="margin-left: -0.5em"/>
+                            </div>
+
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_notify_customer"/>
+                                <div class="text-muted">
+                                    If checked, Then customers will update while
+                                    change the
+                                    order status.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 style="font-size:25px;" invisible="not shopify_instance_id">Stock
+                        Information
+                    </h2>
+                    <div class="row mt16 o_settings_container" invisible="not shopify_instance_id">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_stock_field"/>
+                                <div class="text-muted">
+                                    Select inventory field for shopify products.
+                                    <br/>
+                                    Forecast Quantity = Quantity On Hand - Outgoing + Incoming
+                                    <br/>
+                                    Free To Use Quantity = Quantity On Hand - Reserved quantity
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_stock_field" class="o_light_label" widget="selection" domain="[('model_id.model','=','product.product'),('name','in',['free_qty','virtual_available','qty_available'])]"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 style="font-size:25px;" invisible="not shopify_instance_id">
+                        Schedule Activity Information
+                    </h2>
+                    <div class="row mt16 o_settings_container" invisible="not shopify_instance_id">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="is_shopify_create_schedule" style="margin-left: -0.5em"/>
+                            </div>
+
+                            <div class="o_setting_right_pane">
+                                <label for="is_shopify_create_schedule"/>
+                                <div class="text-muted">
+                                    If checked, Then Schedule Activity create.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box" invisible="not is_shopify_create_schedule">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_activity_type_id" string="Activity Type"/>
+                                <div class="text-muted">
+                                    Select Schedule Activity Type
+                                    <div>
+                                        <field name="shopify_activity_type_id" class="oe_inline" required="is_shopify_create_schedule"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box" invisible="not is_shopify_create_schedule">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_user_ids"/>
+                                <div class="text-muted">
+                                    Select Responsible User
+                                    <div>
+                                        <field name="shopify_user_ids" widget="many2many_tags" class="oe_inline" required="is_shopify_create_schedule"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 o_setting_box" invisible="not is_shopify_create_schedule">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_date_deadline" string="Deadline Lead Days"/>
+                                <div class="text-muted">
+                                    Enter Lead Days For Deadline Date Of Schedule
+                                    Activity
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_date_deadline" class="o_light_label" required="is_shopify_create_schedule"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 style="font-size:25px;" invisible="not shopify_instance_id">
+                        Payout Report Information
+                    </h2>
+                    <div class="row mt16 o_settings_container" invisible="not shopify_instance_id">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="shopify_settlement_report_journal_id"/>
+                                <div class="text-muted">
+                                    Creates Bank Statement using this journal while process Payout Report (This will
+                                    apply for shopify payment method only).
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopify_settlement_report_journal_id" class="o_light_label" domain="[('type','in',['cash','bank']),('company_id','=',shopify_company_id)]" options="{'no_create':True,'no_open':True}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 style="font-size:25px;" invisible="not shopify_instance_id">
+                        Digest
+                    </h2>
+                    <div class="row mt16 o_settings_container" invisible="not shopify_instance_id">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="is_shopify_digest" string="Send Periodic Digest?" style="margin-left: -0.5em"/>
+                            </div>
+
+                            <div class="o_setting_right_pane">
+                                <label for="is_shopify_digest"/>
+                                <div class="text-muted">
+                                    If checked, Then it will send periodic digest per KPI.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+     <record id="action_res_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'shopify', 'bin_size': False}</field>
+    </record>
+</odoo>

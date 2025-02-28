@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="shopify_conector.dashboard">
+
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> -->
+       
+        <div class="o_kanban_view oe_background_grey o_kanban_dashboard o_emphasize_colors o_emipro_kanban o_view_controller o_action">
+            <div class="o_control_panel d-flex flex-column gap-3 px-3 pt-2 pb-3" data-command-category="actions">
+                <div class="o_control_panel_main d-flex flex-wrap flex-lg-nowrap justify-content-between align-items-lg-start gap-lg-3 flex-grow-1">
+                    <div class="o_control_panel_breadcrumbs d-flex align-items-center gap-1 order-0 h-lg-100">
+                        <div class="o_control_panel_main_buttons d-flex gap-1 d-empty-none d-print-none">
+                            <div class="d-inline-flex gap-1">
+                                <div class="o_cp_buttons d-empty-none d-flex align-items-baseline gap-1" role="toolbar" aria-label="Main actions"></div>
+                            </div>
+                        </div>
+                        <div class="o_breadcrumb d-flex gap-1 text-truncate">
+                            <div class="o_last_breadcrumb_item active d-flex fs-4 min-w-0 align-items-center">
+                                <span class="min-w-0 text-truncate">Shopify Dashboard</span>
+                            </div>
+                            <div class="o_control_panel_breadcrumbs_actions d-inline-flex d-print-none">
+                                <div class="o_cp_action_menus d-flex align-items-center gap-1 pe-2">
+                                    <div class="lh-1">
+                                        <button class="d-print-none btn lh-sm p-0 border-0 o-dropdown dropdown-toggle dropdown" data-hotkey="u" data-tooltip="Actions" aria-expanded="false" style="position: relative;" title="">
+                                            <i class="fa fa-cog"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="me-auto"></div>
+                    </div>
+                    <div class="o_control_panel_actions d-empty-none d-flex align-items-center justify-content-start justify-content-lg-around order-2 order-lg-1 w-100 w-lg-auto">
+                        <div class="o_cp_searchview d-flex input-group mt-1 mt-md-0" role="search">
+                            <div class="o_searchview form-control d-print-contents d-flex align-items-center py-1 border-end-0" role="search" aria-autocomplete="list">
+                                <button class="d-print-none btn border-0 p-0" role="button" aria-label="Search..." title="Search...">
+                                    <i class="o_searchview_icon oi oi-search me-2" role="img"></i>
+                                </button>
+                                <div class="o_searchview_input_container d-flex flex-grow-1 flex-wrap gap-1" style="position: relative;">
+                                    <input type="text" class="o_searchview_input o_input d-print-none flex-grow-1 w-auto border-0" placeholder="Search..." role="searchbox" data-hotkey="Q"/>
+                                </div>
+                            </div>
+                            <button class="o_searchview_dropdown_toggler d-print-none btn btn-outline-secondary o-dropdown-caret rounded-start-0 o-dropdown dropdown-toggle dropdown" data-hotkey="shift+q" title="Toggle Search Panel" aria-expanded="false" style="position: relative;"></button>
+                        </div>
+                    </div>
+                    <div class="o_control_panel_navigation d-flex flex-wrap flex-md-nowrap justify-content-end gap-1 gap-xl-3 order-1 order-lg-2 flex-grow-1">
+                        <div class="o_cp_pager text-nowrap " role="search">
+                            <nav class="o_pager d-flex gap-2 h-100" aria-label="Pager">
+                                <span class="o_pager_counter align-self-center">
+                                    <span class="o_pager_value d-inline-block border-bottom border-transparent mb-n1">1-1</span>
+                                    <span> / </span>
+                                    <span class="o_pager_limit">1</span>
+                                </span>
+                                <span class="btn-group d-print-none" aria-atomic="true">
+                                    <button type="button" class="oi oi-chevron-left btn btn-secondary o_pager_previous px-2 rounded-start" aria-label="Previous" data-tooltip="Previous" tabindex="-1" data-hotkey="p" disabled=""></button>
+                                    <button type="button" class="oi oi-chevron-right btn btn-secondary o_pager_next px-2 rounded-end" aria-label="Next" data-tooltip="Next" tabindex="-1" data-hotkey="n" disabled=""></button>
+                                </span>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+
+       <div class="o_content">
+       
+       <div class="dash_me">
+                <div class="container-fluid">
+                  <div class="row">
+
+                  <t t-if="instances">
+                    <t t-foreach="instances" t-as="instance" t-key="instance.id">
+                        <div class="col-md-6">
+                            <div class="card_d1" style="border-left: 3px solid #bb7000; margin-top: 20px;">
+                                <div class="header_card">
+                                    <h5><t t-esc="instance.name"/></h5>
+                                   <select class="form-control"
+                                            t-att-data-instance-id="instance.id"
+                                             t-on-change="onFilterChange">
+                                            <option value="all">All</option>
+                                            <option value="week">Current Week</option>
+                                            <option value="month">Current Month</option>
+                                            <option value="year">Current Year</option>
+                                            <option value="today">Today</option>
+                                    </select>
+
+                                </div>
+                                <div class="inner_us">
+                                    <div class="mb-3">
+                                        <div class="card_d1 p-2">
+                                            <div class="top_us">
+                                                <h2><span>Sales</span> <t t-esc="instance.currency"/> <t t-esc="instance.total_sales"/>
+                                                    </h2>
+                                                 <h2><span class="form-control">Average Order Value : <t t-esc="instance.average_sales_orders"/> </span></h2>
+                                            </div>
+
+                                            <div class="inner_us">
+                                                <div class="mb-3">
+
+                                                    <canvas t-att-id="'shopify_chart_' + instance.id" style="width: 100%; height: 250px;"></canvas>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row row_sm row_set">
+                                        <div class="col-md-3" t-on-click="openproductSection" t-att-data-instance-id="instance.id">
+                                            <div id="products" class="box_cont active">
+                                                <h3>Products <span><t t-esc="instance.product_template_count
+                                                "/></span></h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3" t-on-click="opencustomerSection" t-att-data-instance-id="instance.id">
+                                            <div id="customers" class="box_cont">
+                                                <h3>Customers <span><t t-esc="instance.customer_count"/></span></h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3" t-on-click="opensalesSection" t-att-data-instance-id="instance.id">
+                                            <div id="orders" class="box_cont">
+                                                <h3>Orders <span><t t-esc="instance.sale_order_count"/></span></h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3" t-on-click="opensalesSection" t-att-data-instance-id="instance.id">
+                                            <div id="shipped" class="box_cont">
+                                                <h3>Order Shipped <span><t t-esc="instance.sale_order_count"/></span></h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3" t-on-click="openrefundSection" t-att-data-instance-id="instance.id">
+                                            <div id="refund" class="box_cont">
+                                                <h3>Refund <span><t t-esc="instance.sale_order_count"/></span></h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <button class="btn btn-primary" t-on-click="openOperationAction">Perform Operation</button>
+                                    </div>
+                                    <div class="btn_us text-right">
+                                        <button class="btn btn-outline-secondary btn-sm" t-on-click="openReportSection">Report</button>
+                                        <button class="btn btn-outline-secondary btn-sm" t-on-click="openReportSection">Logs</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>  
+                   </t> 
+                   <t t-else="">
+                        <p>No instances found.</p>
+                   </t>
+
+                  </div>
+                </div>
+            </div>
+       
+       </div>
+            
+      
+
+
+
+
+        </div>
+    </t>
+</templates>

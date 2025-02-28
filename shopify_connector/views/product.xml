@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="shopify_product_template_ept_tree" model="ir.ui.view">
+        <field name="name">shopify.product.template.ept.list.view</field>
+        <field name="model">shopify.product.template.ept</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="exported_in_shopify" />
+                <field name="name" />
+                <field name="product_tmpl_id" />
+                <field name="shopify_instance_id" />
+                <field name="total_sync_variants" />
+                <field name="total_variants_in_shopify" />
+                <field name="website_published" />
+            </list>
+        </field>
+    </record>
+    <record  id="shopify_product_template_ept_form" model="ir.ui.view">
+        <field name="name">shopify.product.template.ept.form.view</field>
+        <field name="model">shopify.product.template.ept</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Product Form View" >
+                <sheet>
+                    <field name="name" class="oe_inline" invisible="1" />
+                    <field name="exported_in_shopify" invisible="1"/>
+                    <field name="active" class="oe_inline" invisible="1" />
+                    <div class="ribbon ribbon-top-right" invisible="active">
+						<span class="bg-danger" style="left: -4px !important;top: 20px !important">
+							Archived
+						</span>
+					</div>
+					<div class="oe_title" style="width: 390px;">
+						<label class="oe_edit_only" for="name" string="Title" />
+						<h1>
+							<field name="name" class="oe_inline" />
+						</h1>
+					</div>
+                    <button name="shopify_publish_unpublish_product" class="pull-right" type="object" string="Unpublish Product" context="{'publish': 'shopify_unpublish'}" invisible="not exported_in_shopify or website_published == 'unpublished'" />
+					<button name="shopify_publish_unpublish_product" class="pull-right" type="object" string="Publish in Web and POS" context="{'publish': 'shopify_publish_global'}" invisible="not exported_in_shopify or website_published == 'published_global'" />
+					<button name="shopify_publish_unpublish_product" class="pull-right" type="object" string="Publish in Web Only" context="{'publish': 'shopify_publish_web'}" invisible="not exported_in_shopify or website_published == 'published_web'" />
+                    <notebook>
+                        <page string="Shopify Info">
+                            <group>
+                                <group>
+                                    <field name="shopify_instance_id" readonly="exported_in_shopify"/>
+                                    <field name="product_tmpl_id" required="1" readonly="1"/>
+                                </group>
+                                <group>
+                                    <label for="shopify_tmpl_id" />
+                                    <div name="shopify_product_link">
+                                        <field name="shopify_tmpl_id" readonly="1" style="width:auto !important;" />
+                                        <button name="action_product_ref_redirect" type="object" icon="fa-external-link" invisible="not exported_in_shopify">
+										</button>
+                                    </div>
+                                    <field name="exported_in_shopify" readonly="1" />
+                                </group>
+                                <group>
+                                    <field name="created_at" readonly="1" />
+									<field name="updated_at" readonly="1" />
+                                    <field name="website_published" readonly="1" />
+                                    <field name="published_at" readonly="1" />
+                                    <field name="tag_ids" widget="many2many_tags" />
+                                    <field name="shopify_product_category">
+									</field>
+                                </group>
+                                <group>
+                                    <field name="total_variants_in_shopify" readonly="1" />
+                                    <field name="total_sync_variants" />
+                                </group>
+                            </group>
+                            <div string="Description">
+                                <field name="description" nolabel="1" />
+                            </div>
+                        </page>
+                        <page string="Variants" >
+                            <div>
+                                <field name="shopify_product_ids" nolabel="1" />
+                            </div>
+                        </page>
+                        <page string="Images">
+                            <div string="Images Info" colspan="4">
+                                <field name="shopify_image_ids" context="{'default_shopify_template_id':id}" mode="kanban" options="{'create_text':'Add a Media','no_create_edit':True}" nolabel="1">
+								</field>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="shopify_product_template_ept_action">
+        <field name="name">Shopify Product</field>
+        <field name="res_model">shopify.product.template.ept</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <record id="shopify_product_product_ept_tree" model="ir.ui.view">
+        <field name="name">shopify.product.product.ept.list</field>
+        <field name="model">shopify.product.product.ept</field>
+        <field name="arch" type="xml">
+            <list create="true" sample="1">
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="shopify_instance_id"/>
+                <field name="default_code"/>
+                <field name="product_id"/>
+                <field name="variant_id"/>
+                <field name="exported_in_shopify"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="shopify_product_product_ept_form" model="ir.ui.view">
+        <field name="name">shopify.product.product.ept.form</field>
+        <field name="model">shopify.product.product.ept</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Product Form View">
+                <sheet>
+                    <field name="active" class="oe_inline" invisible="1"/><!-- Reason for making this field invisible beacuse this field is used in other view field as reference or condition.-->
+                    <div class="ribbon ribbon-top-right" invisible="active">
+                        <span class="bg-danger" style="left: -4px !important;top: 20px !important">Archived
+                        </span>
+                    </div>
+                    <div class="oe_title" style="width: 390px;">
+                        <label class="oe_edit_only" for="name" string="Title"/>
+                        <h1>
+                            <field name="name" class="oe_inline"/>
+                        </h1>
+                    </div>
+                    <notebook>
+                        <page string="Shopify Info">
+                            <group>
+                                <group>
+                                    <field name="shopify_instance_id" readonly="exported_in_shopify"/>
+                                    <field name="shopify_template_id"/>
+                                    <field name="variant_id" readonly="1"/>
+                                    <field name="sequence"/>
+                                </group>
+                                <group>
+                                    <field name="product_id" readonly="1"/>
+                                    <field name="exported_in_shopify" readonly="1"/>
+                                    <field name="default_code"/>
+                                    <field name="inventory_item_id" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="created_at" readonly="1"/>
+                                    <field name="updated_at" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="taxable"/>
+                                    <field name="inventory_management"/>
+                                    <field name="check_product_stock" invisible="inventory_management == 'Dont track Inventory'"/>
+                                </group>
+                                <group>
+                                    <field name="fix_stock_type" invisible="fixed_stock_export"/>
+                                    <field name="fix_stock_value" invisible="fixed_stock_export"/>
+                                </group>
+                                <group>
+                                    <field name="fixed_stock_export"/>
+                                    <field name="fixed_stock_export_value" invisible="not fixed_stock_export"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Images">
+                            <group string="Images Info" colspan="4">
+                                <field name="shopify_image_ids" context="{'default_shopify_variant_id':id,'default_shopify_template_id':shopify_template_id}" mode="kanban" options="{'create_text':'Add a Media'}" nolabel="1">
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- <record model="ir.actions.act_window" id="shopify_product_product_ept_action">
+        <field name="name">Shopify Product</field>
+        <field name="res_model">shopify.product.product.ept</field>
+        <field name="view_mode">tree,form</field>
+    </record> -->
+
+    <record model="ir.actions.act_window" id="shopify_product_product_ept_action">
+        <field name="name">Shopify Product</field>
+        <field name="res_model">shopify.product.product.ept</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('shopify_instance_id', '=', context.get('default_instance_id'))] if context.get('default_instance_id') else []</field>
+        <field name="context">{}</field>
+    </record>
+
+
+    
+    <!-- <menuitem   
+        id="shopify_product_product_ept_submenuitem_root"
+        name="Product Variants"
+        parent="shopify_product_template_ept_parent_root"
+        action="shopify_product_product_ept_action"
+    /> -->
+
+</odoo>

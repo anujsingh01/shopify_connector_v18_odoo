@@ -1,0 +1,149 @@
+.o_kanban_dashboard.o_emipro_kanban .o_content .o_kanban_renderer.o_kanban_ungrouped .o_kanban_record {
+    width: 31.33%;
+}
+.o_field_dashboard_graph_ept {
+    width: 100%;
+    margin-top: 8px;
+    cursor: pointer;
+}
+.o_kanban_renderer .o_kanban_record:not(.o_legacy_kanban_record) {
+    --fieldWidget-display: block;
+    --Tag-max-width: 100%;
+    --Tag-font-size: 0.75rem;
+    --Tags-margin: calc(1em - var(--Tag-font-size, .75rem)) 0;
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    align-items: stretch;
+    min-width: 150px;
+    margin: 0 0 -1px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.ep_kanban_records{
+    display:flex;
+}
+
+.ep_kanban_records a {
+    width: 19.2%;
+    float: left;
+    margin: 1% 1% 1% 0%;
+    padding: 8px 0px;
+    font-size: 11px;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: #ced4da;
+    font-weight: 600;
+}
+
+.ep_o_kanban_setting a {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    border-color: #ced4da;
+    padding: 8px 8px;
+    margin: 0px 0px 0px 5px;
+    float: right;
+}
+
+.position-absolute {
+    position: absolute !important;
+}
+
+
+.row_sm {
+margin: 0 -7px;
+}
+.row_sm [class*="col-"] {
+padding: 0 7px;
+}
+.box_cont {
+background: #4bc25a21;
+border-left: 3px solid #4bc25a;
+padding: 5px 15px;
+margin-bottom: 15px;
+}
+.box_cont h3 {
+font-size: 13px;
+color: #6c6c6c;
+margin: 0;
+line-height: 20px;
+}
+.box_cont h3 span {
+display: block;
+font-size: 17px;
+font-weight: 600;
+color: #000;
+}
+.card_d1 {
+background: #fff;
+border: 1px solid #d9d9d9;
+}
+.header_card {
+display: flex;
+justify-content: space-between;
+align-items: center;
+border: 1px solid #d9d9d9;
+padding: 10px 15px;
+}
+.header_card h5{
+margin: 0;
+font-size: 14px;
+}
+.header_card .form-control{
+font-size: 14px;
+height: 30px;
+width: 150px;
+}
+.inner_us {
+padding: 15px;
+}
+.row_set .col-md-3{
+width: 20%;
+-ms-flex: 0 0 20%;
+flex: 0 0 20%;
+max-width: 20%;
+}
+.btn_us .btn{
+margin: 2px;
+font-weight: 600;
+}
+#customers {
+background: #4bacc221;
+border-color: #4bacc2;
+}
+#orders {
+background: #e6970021;
+border-color: #e69700;
+}
+#shipped {
+background: #a025cc21;
+border-color: #a025cc;
+}
+#refund {
+background: #cc151d21;
+border-color: #cc151d;
+}
+.top_us {
+display: flex;
+flex-wrap: wrap;
+gap: 7px;
+justify-content: space-between;
+}
+.top_us h2 {
+margin: 0;
+font-size: 21px;
+font-weight: 700;
+}
+.top_us h2 span{
+font-size: 14px;
+display: block;
+font-weight: 400;
+margin-bottom: 5px;
+}
+.top_us .form-control{
+width: 200px;
+font-size: 12px;
+}

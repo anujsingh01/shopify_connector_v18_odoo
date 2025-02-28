@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+      <record id="seq_shopify_product_data_queue_ept" model="ir.sequence">
+          <field name="name">Shopify Product Data Queue Ept</field>
+          <field name="code">my_sequence_code</field>
+          <field name="prefix">PDQ</field>
+          <field name="padding">5</field>
+          <field name="company_id" eval="False"/>
+      </record>
+    </data>
+</odoo>

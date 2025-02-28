@@ -1,0 +1,20 @@
+<odoo>
+    <record model="ir.actions.client" id="shopify_client_action">
+        <field name="name">Shopify</field>
+        <field name="tag">shopify_conector.ShopifyClientAction</field>
+    </record>
+
+
+    <menuitem   
+        id="shopify_dashboard_root"
+        name="Shopify"
+    />
+
+    <menuitem   
+        id="shopify_dashboard"
+        name="Dashboard"
+        parent="shopify_dashboard_root"
+        action="shopify_client_action"
+    />
+    
+</odoo>
