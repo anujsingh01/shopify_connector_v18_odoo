@@ -9,13 +9,13 @@
     'website': "https://www.inwizards.com/",
     'category': 'Uncategorized',
     'version': '0.1',
-    'price' : '149',
+    'price' : '199',
     'currency' : 'USD', 
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'sale', 'account', 'stock','product'],
 
-    # always loaded
+    # always loaded  
     'data': [
         'security/ir.model.access.csv',
         'demo/demo.xml',
