@@ -8,7 +8,7 @@
     'author': "Inwizards Software Technology",
     'website': "https://www.inwizards.com/",
     'category': 'Uncategorized',
-    'version': '0.1',
+    'version': '18.0.1.0.0',
     'price' : '199',
     'currency' : 'USD', 
 
