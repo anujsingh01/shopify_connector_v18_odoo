@@ -827,12 +827,12 @@ class ShopifyScheduledAction(models.Model):
             # Find all crons with the same name 
             existing_crons = cron_env.search([
                 ('name', '=', cron_name),
-                ('model_id', '=', self.env.ref('shopify_connector.model_shopify_scheduled_action').id)
+                ('model_id', '=', self.env.ref('shopify_connector_inwi.model_shopify_scheduled_action').id)
             ])
 
             cron_values = {
                 'name': cron_name,
-                'model_id': self.env.ref('shopify_connector.model_shopify_scheduled_action').id,
+                'model_id': self.env.ref('shopify_connector_inwi.model_shopify_scheduled_action').id,
                 'state': 'code',
                 'code': f"model.{method_name}()",
                 'user_id': self.env.user.id,

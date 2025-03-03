@@ -105,17 +105,17 @@ class ShopifyClientAction extends Component {
     
 
     openOperationAction() {
-        this.action.doAction("shopify_connector.operation_action");
+        this.action.doAction("shopify_connector_inwi.operation_action");
     }
     openReportSection() {
-        this.action.doAction("shopify_connector.common_log_lines_ept_data_action");
+        this.action.doAction("shopify_connector_inwi.common_log_lines_ept_data_action");
     }
 
     openproductSection(event) {
         const instanceId = event.currentTarget.dataset.instanceId;
         
         // this.action.doAction("shopify_connector.shopify_product_product_ept_action");
-        this.action.doAction("shopify_connector.shopify_product_product_ept_action", {
+        this.action.doAction("shopify_connector_inwi.shopify_product_product_ept_action", {
             additionalContext: {
                 default_instance_id: parseInt(instanceId), // Pass the instance ID to the context
             },
@@ -129,7 +129,7 @@ class ShopifyClientAction extends Component {
         const instanceId = event.currentTarget.dataset.instanceId;
         
         // this.action.doAction("shopify_connector.shopify_product_product_ept_action");
-        this.action.doAction("shopify_connector.shopify_customer_action", {
+        this.action.doAction("shopify_connector_inwi.shopify_customer_action", {
             additionalContext: {
                 default_instance_id: parseInt(instanceId), // Pass the instance ID to the context
             },
@@ -137,11 +137,11 @@ class ShopifyClientAction extends Component {
 
     }
     opensalesSection() {
-        this.action.doAction("shopify_connector.shopify_orders_action");
+        this.action.doAction("shopify_connector_inwi.shopify_orders_action");
     }
 
     openrefundSection() {
-        this.action.doAction("shopify_connector.shopify_refunds_action");
+        this.action.doAction("shopify_connector_inwi.shopify_refunds_action");
     }
     
 }
