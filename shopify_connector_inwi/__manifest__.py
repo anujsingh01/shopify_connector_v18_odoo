@@ -12,6 +12,7 @@
     'price' : '199',
     'currency' : 'USD', 
     "license": "AGPL-3",
+    'live_test_url': 'https://pos.onlineemenu.com/web/login?db=ManufacturingDB',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'sale', 'account', 'stock','product'],
